@@ -4,41 +4,44 @@ import (
 	//"fmt"
 	"os"
 	"strings"
+	"io"
+	"fmt"
 )
 
-const bufsize = 1024
-
 func main() {
-	tail(bufsize)
+	n := 100
+
+	/*
+	 */
+	mytail(n, os.Stdout, 1024)
 }
 
-func tail(bufsize int64) {
+func mytail(N int, output io.Writer, bufsize int64) {
 	fp, _ := os.Open("testlog.log")
 	info, _ := fp.Stat()
 	size := info.Size()
 
-	n := 5
 	lines := ""
 
-	for n != 0 {
+	for N != 0 {
 		buf := make([]byte, bufsize)
 		fp.Seek(size-bufsize, 0)
 		_, _ = fp.Read(buf)
 
 		num := strings.Count(string(buf), "\n")
 
-		if n <= num {
+		if N <= num {
 			for i := len(buf) - 1; i >= 0; i-- {
 				if buf[i] == 10 {
-					n--
-					if n == 0 {
-						//fmt.Print(string(buf[i+1:]) + lines)
+					N--
+					if N == 0 {
+						fmt.Fprint(output, string(buf[i+1:])+lines)
 						break
 					}
 				}
 			}
 		} else {
-			n -= num
+			N -= num
 			lines = string(buf) + lines
 		}
 		size -= bufsize
