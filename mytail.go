@@ -24,15 +24,23 @@ func main() {
 	case 4:
 		fileName = os.Args[3]
 	default:
-		log.Fatal("args error")
+		log.Fatalf("args error please: mytail -help")
 	}
 
 	mytail(fileName, *linesNum, os.Stdout, 1024)
 }
 
 func mytail(fileName string, N int, output io.Writer, bufsize int64) {
-	fp, _ := os.Open("testlog.log")
-	info, _ := fp.Stat()
+	fp, err := os.Open(fileName)
+	if err != nil {
+		log.Fatalf("file open error %v\n", err)
+	}
+
+	info, err := fp.Stat()
+	if err != nil {
+		log.Fatalf("get fileinfo error %v\n", err)
+	}
+
 	size := info.Size()
 
 	lines := ""
