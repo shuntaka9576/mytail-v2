@@ -2,11 +2,12 @@ package main
 
 import (
 	//"fmt"
+	"flag"
+	"fmt"
+	"io"
 	"os"
 	"strings"
-	"io"
-	"fmt"
-	"flag"
+	"log"
 )
 
 var (
@@ -15,10 +16,21 @@ var (
 
 func main() {
 	flag.Parse()
-	mytail(*linesNum, os.Stdout, 1024)
+
+	fileName := ""
+	switch len(os.Args) {
+	case 2:
+		fileName = os.Args[1]
+	case 4:
+		fileName = os.Args[3]
+	default:
+		log.Fatal("args error")
+	}
+
+	mytail(fileName, *linesNum, os.Stdout, 1024)
 }
 
-func mytail(N int, output io.Writer, bufsize int64) {
+func mytail(fileName string, N int, output io.Writer, bufsize int64) {
 	fp, _ := os.Open("testlog.log")
 	info, _ := fp.Stat()
 	size := info.Size()
