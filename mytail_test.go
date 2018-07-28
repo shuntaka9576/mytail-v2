@@ -31,7 +31,7 @@ func TestMytailBlackLine(t *testing.T) {
 }
 
 // 3行しかないテキストに対して6行要求する
-func TestMytailBlac3Line(t *testing.T) {
+func TestMytail3Line(t *testing.T) {
 	expect := `aaa
 aaaaa
 aaaaaaaa

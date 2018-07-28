@@ -21,7 +21,7 @@ func main() {
 		if len(fileNames) > 1 {
 			fmt.Printf("==> %v <==\n", fileName)
 		}
-		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 10)
+		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 1024)
 	}
 }
 
@@ -52,7 +52,7 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 			size = 0
 		}
 
-		bytesVaildCount, err := fp.Read(buf)
+		_, err := fp.Read(buf)
 		if err != nil {
 			log.Fatalf("read buffer error %v\n", err)
 		}
@@ -63,33 +63,22 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 			for bytes.Count(buf, []byte("\n\n")) != 0 {
 				buf = bytes.Replace(buf, []byte("\n\n"), []byte("\n"), -1)
 			}
-			if bytesVaildCount > len(buf) {
-				bytesVaildCount = len(buf)
-			}
 		}
 
-		num := bytes.Count(buf, []byte("\n"))
-		//if len(buf) > bytesVaildCount {
-		//	log.Println("test1")
-		//	if num < lfcount {
-		//		fmt.Fprint(output, string(buf[:bytesVaildCount])+lines)
-		//		break
-		//	}
-		//}
-		if lfcount <= num {
-			i := bytesVaildCount - 1
-			for ; i >= 0; i-- {
+		bufLfcount := bytes.Count(buf, []byte("\n"))
+		if lfcount <= bufLfcount {
+			for i := len(buf) - 1; i >= 0; i-- {
 				if buf[i] == 10 {
 					lfcount--
 					if lfcount == 0 {
-						fmt.Fprint(output, string(buf[i+1:bytesVaildCount])+lines)
+						fmt.Fprint(output, string(buf[i+1:])+lines)
 						break
 					}
 				}
 			}
 			break
 		} else {
-			lfcount -= num
+			lfcount -= bufLfcount
 			lines = string(buf) + lines
 			if size == 0 {
 				fmt.Fprint(output, lines)
