@@ -15,10 +15,10 @@ func TestMytailStandardoutPut3(t *testing.T) {
 	}
 }
 `
-	output := &bytes.Buffer{}
-	mytail("testlog.log", false, 4, output, 10)
+	output := new(bytes.Buffer)
+	mytail("testlog.log", false, 3, output, 10)
 	if output.String() != expect {
-		t.Errorf("Error %v : %v", expect, output.String())
+		t.Errorf("Error %v\n\n%v", expect, output.String())
 	}
 }
 
@@ -28,6 +28,19 @@ func TestMytailStandardOutput10(t *testing.T) {
 
 func TestMytailBlackLine(t *testing.T) {
 	mytail("./testlog/blankline.log", true, 3, os.Stdout, 10)
+}
+
+// 3行しかないテキストに対して6行要求する
+func TestMytailBlac3Line(t *testing.T) {
+	expect := `aaa
+aaaaa
+aaaaaaaa
+`
+	output := new(bytes.Buffer)
+	mytail("./testlog/3lines.log", true, 6, output, 10)
+	if output.String() != expect {
+		t.Errorf("Error [%v]\n\n[%v]", expect, output.String())
+	}
 }
 
 /*

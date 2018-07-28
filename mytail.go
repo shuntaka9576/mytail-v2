@@ -21,11 +21,12 @@ func main() {
 		if len(fileNames) > 1 {
 			fmt.Printf("==> %v <==\n", fileName)
 		}
-		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 1024)
+		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 10)
 	}
 }
 
 func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, bufsize int64) {
+	lfcount := N + 1
 	fp, err := os.Open(fileName)
 	if err != nil {
 		log.Fatalf("file(%v) open error %v\n", fileName, err)
@@ -40,11 +41,23 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 
 	lines := ""
 
-	for N != -1 {
-		buf := make([]byte, bufsize)
-		fp.Seek(size-bufsize, 0)
+	for lfcount >= 0 {
+		var buf []byte
+		if size-bufsize > 0 {
+			buf = make([]byte, bufsize)
+			fp.Seek(size-bufsize, 0)
+		} else {
+			buf = make([]byte, size)
+			fp.Seek(0, 0)
+			size = 0
+		}
 
-		bytesVaildCount, _ := fp.Read(buf)
+		bytesVaildCount, err := fp.Read(buf)
+		if err != nil {
+			log.Fatalf("read buffer error %v\n", err)
+		}
+
+		// 空行無視モード
 		if ignoreBlankLineFlag {
 			buf = bytes.Replace(buf, []byte("\r"), []byte(""), -1)
 			for bytes.Count(buf, []byte("\n\n")) != 0 {
@@ -54,19 +67,21 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 				bytesVaildCount = len(buf)
 			}
 		}
+
 		num := bytes.Count(buf, []byte("\n"))
-		if len(buf) >= bytesVaildCount {
-			if num <= N {
-				fmt.Fprint(output, string(buf[:bytesVaildCount])+lines)
-				break
-			}
-		}
-		if N <= num {
-			i := bytesVaildCount
+		//if len(buf) > bytesVaildCount {
+		//	log.Println("test1")
+		//	if num < lfcount {
+		//		fmt.Fprint(output, string(buf[:bytesVaildCount])+lines)
+		//		break
+		//	}
+		//}
+		if lfcount <= num {
+			i := bytesVaildCount - 1
 			for ; i >= 0; i-- {
 				if buf[i] == 10 {
-					N--
-					if N == -1 {
+					lfcount--
+					if lfcount == 0 {
 						fmt.Fprint(output, string(buf[i+1:bytesVaildCount])+lines)
 						break
 					}
@@ -74,8 +89,12 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 			}
 			break
 		} else {
-			N -= num
+			lfcount -= num
 			lines = string(buf) + lines
+			if size == 0 {
+				fmt.Fprint(output, lines)
+				break
+			}
 		}
 		size -= bufsize
 	}
