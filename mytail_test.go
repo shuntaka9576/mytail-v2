@@ -11,7 +11,15 @@ import (
 */
 
 func TestMytailStandardoutPut3(t *testing.T) {
-	mytail("testlog.log", false, 3, os.Stdout, 10)
+	expect := `		size -= bufsize
+	}
+}
+`
+	output := &bytes.Buffer{}
+	mytail("testlog.log", false, 4, output, 10)
+	if output.String() != expect {
+		t.Errorf("Error %v : %v", expect, output.String())
+	}
 }
 
 func TestMytailStandardOutput10(t *testing.T) {
