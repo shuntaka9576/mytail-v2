@@ -43,22 +43,22 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 	for N != 0 {
 		buf := make([]byte, bufsize)
 		fp.Seek(size-bufsize, 0)
-		count, _ := fp.Read(buf)
+		bytesVaildCount, _ := fp.Read(buf)
 
-		//if ignoreBlankLineFlag {
-		//	fmt.Println(bytes.Count(buf, []byte("\n\n")))
-		//	for bytes.Count(buf, []byte("\n\n")) != 0 {
-		//		buf = bytes.Replace(buf, []byte("\n\n"), []byte("\n"), -1)
-		//	}
-		//}
+		if ignoreBlankLineFlag {
+			for bytes.Count(buf, []byte("\n\n")) != 0 {
+				buf = bytes.Replace(buf, []byte("\n\n"), []byte("\n"), -1)
+			}
+		}
+
 		num := bytes.Count(buf, []byte("\n"))
 
 		if N <= num {
-			for i := count - 1; i >= 0; i-- {
+			for i := bytesVaildCount - 1; i >= 0; i-- {
 				if buf[i] == 10 {
 					N--
 					if N == 0 {
-						fmt.Fprint(output, string(buf[i+1:count])+lines)
+						fmt.Fprint(output, string(buf[i+1:bytesVaildCount])+lines)
 						break
 					}
 				}
