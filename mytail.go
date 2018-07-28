@@ -6,14 +6,16 @@ import (
 	"strings"
 	"io"
 	"fmt"
+	"flag"
+)
+
+var (
+	linesNum = flag.Int("n", 10, "output the last N lines")
 )
 
 func main() {
-	n := 100
-
-	/*
-	 */
-	mytail(n, os.Stdout, 1024)
+	flag.Parse()
+	mytail(*linesNum, os.Stdout, 1024)
 }
 
 func mytail(N int, output io.Writer, bufsize int64) {
