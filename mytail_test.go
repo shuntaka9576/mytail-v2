@@ -43,6 +43,7 @@ func TestMyTail(t *testing.T) {
 	}
 }
 
+// 軽いテキストで5行出力するベンチマーク
 func benchmarkLightText(b *testing.B, bufsize int64) {
 	output := &bytes.Buffer{}
 	b.ResetTimer()
@@ -63,6 +64,7 @@ func BenchmarkTailBuf8000LightText(b *testing.B)  { benchmarkLightText(b, 8000) 
 func BenchmarkTailBuf9000LightText(b *testing.B)  { benchmarkLightText(b, 9000) }
 func BenchmarkTailBuf10000LightText(b *testing.B) { benchmarkLightText(b, 10000) }
 
+// 1G程度のテキストで5行出力するベンチマーク
 func benchmarkHeavyText(b *testing.B, bufsize int64) {
 	output := &bytes.Buffer{}
 	b.ResetTimer()
@@ -83,7 +85,7 @@ func BenchmarkTailBuf8000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 8000) 
 func BenchmarkTailBuf9000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 9000) }
 func BenchmarkTailBuf10000HeavyText(b *testing.B) { benchmarkHeavyText(b, 10000) }
 
-// ----
+// 1G程度のテキストで100行出力するベンチマーク
 func benchmarkHeavyTextManyLines(b *testing.B, bufsize int64) {
 	output := &bytes.Buffer{}
 	b.ResetTimer()

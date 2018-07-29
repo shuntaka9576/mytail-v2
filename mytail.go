@@ -21,7 +21,8 @@ func main() {
 		if len(fileNames) > 1 {
 			fmt.Printf("==> %v <==\n", fileName)
 		}
-		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 1024)
+		// ベンチマークの結果、バッファサイズには4000を指定
+		mytail(fileName, *ignoreBlankLineFlag, *linesNum, os.Stdout, 4000)
 	}
 }
 
