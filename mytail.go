@@ -12,7 +12,7 @@ import (
 func main() {
 	var (
 		linesNum            = flag.Int("n", 10, "output the last N lines")
-		ignoreBlankLineFlag = flag.Bool("v", false, "output the last N lines")
+		ignoreBlankLineFlag = flag.Bool("v", false, "ignore blank lines select true or false(default false)")
 	)
 	flag.Parse()
 	fileNames := flag.Args()
