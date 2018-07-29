@@ -31,6 +31,7 @@ func mytail(fileName string, ignoreBlankLineFlag bool, N int, output io.Writer, 
 	if err != nil {
 		log.Fatalf("file(%v) open error %v\n", fileName, err)
 	}
+	defer fp.Close()
 
 	info, err := fp.Stat()
 	if err != nil {
