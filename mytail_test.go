@@ -52,9 +52,16 @@ func benchmarkLightText(b *testing.B, bufsize int64) {
 }
 func BenchmarkTailBuf1LightText(b *testing.B)     { benchmarkLightText(b, 1) }
 func BenchmarkTailBuf100LightText(b *testing.B)   { benchmarkLightText(b, 100) }
-func BenchmarkTailBuf1024LightText(b *testing.B)  { benchmarkLightText(b, 1024) }
-func BenchmarkTailBuf2048LightText(b *testing.B)  { benchmarkLightText(b, 2048) }
-func BenchmarkTailBuf10240LightText(b *testing.B) { benchmarkLightText(b, 10240) }
+func BenchmarkTailBuf1000LightText(b *testing.B)  { benchmarkLightText(b, 1000) }
+func BenchmarkTailBuf2000LightText(b *testing.B)  { benchmarkLightText(b, 2000) }
+func BenchmarkTailBuf3000LightText(b *testing.B)  { benchmarkLightText(b, 3000) }
+func BenchmarkTailBuf4000LightText(b *testing.B)  { benchmarkLightText(b, 4000) }
+func BenchmarkTailBuf5000LightText(b *testing.B)  { benchmarkLightText(b, 5000) }
+func BenchmarkTailBuf6000LightText(b *testing.B)  { benchmarkLightText(b, 6000) }
+func BenchmarkTailBuf7000LightText(b *testing.B)  { benchmarkLightText(b, 7000) }
+func BenchmarkTailBuf8000LightText(b *testing.B)  { benchmarkLightText(b, 8000) }
+func BenchmarkTailBuf9000LightText(b *testing.B)  { benchmarkLightText(b, 9000) }
+func BenchmarkTailBuf10000LightText(b *testing.B) { benchmarkLightText(b, 10000) }
 
 func benchmarkHeavyText(b *testing.B, bufsize int64) {
 	output := &bytes.Buffer{}
@@ -65,9 +72,16 @@ func benchmarkHeavyText(b *testing.B, bufsize int64) {
 }
 func BenchmarkTailBuf1HeavyText(b *testing.B)     { benchmarkHeavyText(b, 1) }
 func BenchmarkTailBuf100HeavyText(b *testing.B)   { benchmarkHeavyText(b, 100) }
-func BenchmarkTailBuf1024HeavyText(b *testing.B)  { benchmarkHeavyText(b, 1024) }
-func BenchmarkTailBuf2048HeavyText(b *testing.B)  { benchmarkHeavyText(b, 2048) }
-func BenchmarkTailBuf10240HeavyText(b *testing.B) { benchmarkHeavyText(b, 10240) }
+func BenchmarkTailBuf1000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 1000) }
+func BenchmarkTailBuf2000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 2000) }
+func BenchmarkTailBuf3000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 3000) }
+func BenchmarkTailBuf4000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 4000) }
+func BenchmarkTailBuf5000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 5000) }
+func BenchmarkTailBuf6000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 6000) }
+func BenchmarkTailBuf7000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 7000) }
+func BenchmarkTailBuf8000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 8000) }
+func BenchmarkTailBuf9000HeavyText(b *testing.B)  { benchmarkHeavyText(b, 9000) }
+func BenchmarkTailBuf10000HeavyText(b *testing.B) { benchmarkHeavyText(b, 10000) }
 
 // ----
 func benchmarkHeavyTextManyLines(b *testing.B, bufsize int64) {
@@ -79,6 +93,13 @@ func benchmarkHeavyTextManyLines(b *testing.B, bufsize int64) {
 }
 func BenchmarkTailBuf1HeavyTextManyLines(b *testing.B)     { benchmarkHeavyTextManyLines(b, 1) }
 func BenchmarkTailBuf100HeavyTextManyLines(b *testing.B)   { benchmarkHeavyTextManyLines(b, 100) }
-func BenchmarkTailBuf1024HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 1024) }
-func BenchmarkTailBuf2048HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 2048) }
-func BenchmarkTailBuf10240HeavyTextManyLines(b *testing.B) { benchmarkHeavyTextManyLines(b, 10240) }
+func BenchmarkTailBuf1000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 1000) }
+func BenchmarkTailBuf2000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 2000) }
+func BenchmarkTailBuf3000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 3000) }
+func BenchmarkTailBuf4000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 4000) }
+func BenchmarkTailBuf5000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 5000) }
+func BenchmarkTailBuf6000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 6000) }
+func BenchmarkTailBuf7000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 7000) }
+func BenchmarkTailBuf8000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 8000) }
+func BenchmarkTailBuf9000HeavyTextManyLines(b *testing.B)  { benchmarkHeavyTextManyLines(b, 9000) }
+func BenchmarkTailBuf10000HeavyTextManyLines(b *testing.B) { benchmarkHeavyTextManyLines(b, 10000) }
